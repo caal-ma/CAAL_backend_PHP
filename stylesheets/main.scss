@@ -1,0 +1,133 @@
+@import 'normalize';
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+body {
+	// font-family: Helvetica;
+	font-family: 'Open Sans';
+}
+
+// $red: #FF423F;
+$red: #FF5151;
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+.active-link {
+	color: rgb(64, 64, 64);
+	.fa {
+		color: lighten($red, 10%);
+	}
+}
+
+#navbar {
+	position: fixed;
+	height: 100vh;
+	font-size: 20px;
+	padding: 1.2em 2.4em;
+	// padding-right: 2em;
+	background-color: rgb(246, 246, 246);
+	box-shadow: 0 0 9px rgb(196, 196, 196);
+	a {
+		padding-left: 0.3em;
+		display: block;
+		color: rgb(153, 153, 153);
+		text-decoration: none;
+		height: 3.2em;
+		// padding: 1.2em 0;
+		transition-duration: 300ms;
+		vertical-align: center;
+		.fa {
+			color: rgb(198, 198, 198);
+			width: 1em;
+			padding-right: 0.8em;
+			vertical-align: middle;
+			text-align: center;
+		}
+		&:hover {
+			@extend .active-link;
+		}
+	}
+	#logo {
+		// text-align: center;
+		letter-spacing: -0.12em;
+		font-size: 3.2em;
+		font-weight: 700;
+		height: 1.8em;
+		// color: #FF446D;
+		color: $red;
+	}
+}
+
+#logo-banner {
+	font-size: 1.6em;
+	font-weight: 700;
+	// background-color: $red;
+	background-color: lighten($red, 5%);
+	padding: 1.6em 3em;
+	color: rgb(246, 246, 246);
+	.logo-chinese {
+		padding-top: 0.1em;
+		font-weight: 400;
+		letter-spacing: 0.2em;
+	}
+}
+
+#content {
+	font-size: 20px;
+	margin-left: 195.625px + 2 * 48px;
+}
+
+article {
+	border: 2px rgb(198, 198, 198) dashed;
+	box-shadow: 0 0 3px rgb(246, 246, 246);
+	// background-color: rgb(251, 251, 251);
+	max-width: 50em;
+	padding: 1.6em 2em;
+	// margin: 3em;
+	// margin: 0 auto;
+	margin-bottom: 3em;
+	border-radius: 0.6em;
+}
+
+section {
+	color: rgb(64, 64, 64);
+	padding: 3em;
+}
+
+.tags{
+	float:right;
+	font-size:0.7em;
+	&::before{
+		content:"Tags: ";
+		font-style:italic;
+		font-size:0.9em;
+		margin-right:10px;
+	}
+	
+	.tag{
+		border: solid 1px $red;
+		border-radius: 0.2em;
+		transition: all 0.2s;
+		padding: 0px 5px;
+		color: $red;
+		background-color: white;
+		margin-right: 5px;
+		text-decoration: none;
+		&:hover{
+			background-color: lighten($red, 10%);
+			color:white;
+		}
+	}
+}
+
+
+header {
+	color: rgb(32, 32, 32);
+	h1 {
+		margin: 0.5em 0;
+		margin-top: 0.3em;
+	}
+	// margin: 0.5em 0;
+}

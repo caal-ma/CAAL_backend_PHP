@@ -5,6 +5,28 @@ class PostContents{
 	public $timestamp;
 	public $tags;//(array)
 	public $content;
+	public function toString(){
+		$datetime=date("M. j, Y",$this->timestamp);
+		
+		$tagstr="";
+		//Why is tags just TRUE?
+		foreach($this->tags as $tag)
+			$tagstr.="<a class='tag' href='tags.php?t=".$tag."'>".$tag."</a>";//SANITIZE OMG
+		$contentstr=nl2br($this->content);
+		
+		return <<<HEREDOC
+<article class="post">
+	<header>
+		<span class='date'>{$datetime}</span>
+		<span class='tags'>{$tagstr}</span>
+		<h2>{$this->title}</h2>
+	</header>
+	<p>
+		{$contentstr}
+	</p>
+</article>
+HEREDOC;
+	}
 }
 
 class BlogManager{
@@ -18,7 +40,7 @@ class BlogManager{
 			
 			$this->posts[$i]->title = trim(array_shift($data));
 			$this->posts[$i]->timestamp = (int)trim(array_shift($data));
-			$this->posts[$i]->tags = array_walk(explode(" ",array_shift($data)),"trim");
+			$this->posts[$i]->tags = explode(" ",array_shift($data));array_walk($this->posts[$i]->tags,"trim");
 			$this->posts[$i]->content = trim(implode("\n",$data));
 			
 			$i++;
@@ -42,6 +64,12 @@ class BlogManager{
 		$this->posts = array_filter($this->posts, function($a){
 			return strpos($a->title."\n".$a->tags."\n".$a->content,$requiredStr)!==false;
 		});
+	}
+	public function toString(){
+		$str = "";
+		foreach($this->posts as $post)
+			$str.=$post->toString();
+		return $str;
 	}
 }
 

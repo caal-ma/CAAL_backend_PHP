@@ -1,12 +1,41 @@
-
-<pre>
-<?php
-require "functions.php";
-
-$b = new BlogManager;
-$b->filterReverseChron(0,2);
-var_dump($b->posts);
-?>
-</pre>
-hello
-
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<meta name='description' content=''>
+	<meta name='author' content=''>
+	<link rel='shortcut icon' href=''>
+	<title>CAAL</title>
+	<link href='stylesheets/style.css' rel='stylesheet' type='text/css'>
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+	<nav id='navbar'>
+		<div id='logo'>CAAL</div>
+		<a href='/home'><i class="fa fa-home"></i>Home</a>
+		<a href='#about'><i class="fa fa-info-circle"></i>About</a>
+		<a href='/announcements'><i class="fa fa-bullhorn"></i>Announcements</a>
+		<a href='/committees'><i class="fa fa-sitemap"></i>Committees</a>
+		<a href='/events'><i class="fa fa-calendar-o"></i>Events</a>
+		<a href='/community'><i class="fa fa-group"></i>Community</a>
+		<a href='/resources'><i class="fa fa-wrench"></i>Resources</a>
+		<a href='#contact'><i class="fa fa-envelope-o"></i>Contact</a>
+	</nav>
+	<div id='content'>
+		<div id='logo-banner'>
+			Chinese American Association of Lexington
+			<div class='logo-chinese'>勒星顿华人协会</div>
+		</div>
+		<section>
+			<?php
+			require "functions.php";
+			$b = new BlogManager;
+			$b->filterReverseChron(0,3);
+			echo $b->toString();
+			?>
+		</section>
+	</div>
+</body>
+</html>
