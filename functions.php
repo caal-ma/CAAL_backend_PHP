@@ -7,6 +7,7 @@ class PostContents{
 	public $content;
 	public function toString(){
 		$datetime=date("M. j, Y",$this->timestamp);
+		$datetimedetail=date(DATE_RFC2822,$this->timestamp);//Because \t will be turned into tab or something when in ""
 		
 		$tagstr="";
 		//Why is tags just TRUE?
@@ -17,7 +18,7 @@ class PostContents{
 		return <<<HEREDOC
 <article class="post">
 	<header>
-		<span class='date'>{$datetime}</span>
+		<span class='date' title='Posted on {$datetimedetail}'>{$datetime}</span>
 		<span class='tags'>{$tagstr}</span>
 		<h2>{$this->title}</h2>
 	</header>
@@ -40,7 +41,7 @@ class BlogManager{
 			
 			$this->posts[$i]->title = trim(array_shift($data));
 			$this->posts[$i]->timestamp = (int)trim(array_shift($data));
-			$this->posts[$i]->tags = explode(" ",array_shift($data));array_walk($this->posts[$i]->tags,"trim");
+			$this->posts[$i]->tags = explode(" ",array_shift($data));array_walk($this->posts[$i]->tags,function(&$t){$t=trim($t);});
 			$this->posts[$i]->content = trim(implode("\n",$data));
 			
 			$i++;
@@ -54,18 +55,19 @@ class BlogManager{
 	}
 	public function filterByTags($requiredTags){//Filters to the ones with the tags specified.
 		//Tags specified need to be exactly correct - no extra spaces, capitals, hidden chars.
-		$requiredTags = array_walk($requiredTags,"trim");
-		$this->posts = array_filter($this->posts, function($a){
+		array_walk($requiredTags,function(&$t){$t=trim($t);});
+		$this->posts = array_filter($this->posts, function(&$a) use (&$requiredTags){
+			array_walk($a->tags,function(&$t){$t=trim($t);});
 			return !array_diff($requiredTags,$a->tags);//I think this is right?
 		});
 	}
-	public function filterByString($requiredStr){
+	public function filterByString($requiredStr){//Searches for a single string.
 		$requiredStr = trim($requiredStr);
-		$this->posts = array_filter($this->posts, function($a){
+		$this->posts = array_filter($this->posts, function(&$a) use (&$requiredStr){
 			return strpos($a->title."\n".$a->tags."\n".$a->content,$requiredStr)!==false;
 		});
 	}
-	public function toString(){
+	public function toString(){//Puts it into HTML, with adequate classes attached for styling.
 		$str = "";
 		foreach($this->posts as $post)
 			$str.=$post->toString();
