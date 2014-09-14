@@ -1,8 +1,9 @@
-First Sample Post.
+This is the Title.
 1407906449
-sample weird_posts
+tag1 tag2 tag3
 
-Post starts here.
-Title is one line.
-The time is a UNIX timestamp.
-The categories are space-separated.
+Post starts here. (as much as you want)
+(Title is one line.)
+(The time is a UNIX timestamp.)
+(The tags are space-separated.)
+
